@@ -27,4 +27,29 @@ router.post("/videos", async (req, res) => {
 	res.status(200).json({ success: true, data: { id: newVideoId } });
 });
 
+router.delete("/videos/:id", async (req, res) => {
+	const videoId = req.params.id;
+
+	try {
+		const checkQuery = await db.query("SELECT * FROM videos WHERE id = $1", [
+			`${videoId}`,
+		]);
+		if (checkQuery.rows.length === 0) {
+			return res.status(404).json({
+				message: "Video not found",
+			});
+		}
+
+		const deleteQuery = await db.query("DELETE FROM videos WHERE id = $1", [
+			videoId,
+		]);
+
+		return res.status(204).end();
+	} catch (error) {
+		res
+			.status(500)
+			.json({ message: "Internal server error", error: this.error });
+	}
+});
+
 export default router;

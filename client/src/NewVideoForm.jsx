@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./NewVideoForm.css";
 
-const NewVideoForm = () => {
+const NewVideoForm = ({ onSubmit }) => {
 	const [title, setTitle] = useState("");
 	const [src, setSrc] = useState("");
 
@@ -23,6 +23,9 @@ const NewVideoForm = () => {
 			.catch((error) => {
 				console.error(error);
 			});
+		onSubmit();
+		setTitle("");
+		setSrc("");
 	};
 
 	return (

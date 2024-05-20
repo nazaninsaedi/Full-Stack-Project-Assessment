@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./VideoRecommendations.css";
 import DeleteVideoRecommendation from "./DeleteVideoRecommendation";
+import NewVideoForm from "./NewVideoForm.jsx";
+
 
 const VideoList = () => {
 	const [videos, setVideos] = useState([]);
 
-	useEffect(() => {
+	function fetchVideos() {
 		fetch("/api/videos", {
 			method: "GET",
 			headers: {
@@ -20,6 +22,10 @@ const VideoList = () => {
 			.catch((error) => {
 				console.error(error);
 			});
+	}
+
+	useEffect(() => {
+		fetchVideos();
 	}, []);
 
 	const handleDelete = (videoId) => {
@@ -39,6 +45,7 @@ const VideoList = () => {
 					/>
 				</div>
 			))}
+			<NewVideoForm onSubmit={fetchVideos} />
 		</div>
 	);
 };

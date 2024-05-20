@@ -27,4 +27,19 @@ router.post("/videos", async (req, res) => {
 	res.status(200).json({ success: true, data: { id: newVideoId } });
 });
 
+router.delete("/videos/:id", async (req, res) => {
+	const videoId = req.params.id;
+
+	try {
+		await db.query("DELETE FROM videos WHERE id = $1", [videoId]);
+		res
+			.status(200)
+			.json({ success: true, message: "Video deleted successfully" });
+	} catch (error) {
+		res
+			.status(500)
+			.json({ success: false, error: "Failed to delete the video" });
+	}
+});
+
 export default router;

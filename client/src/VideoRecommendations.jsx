@@ -1,5 +1,6 @@
-import "./VideoRecommendations.css";
 import React, { useState, useEffect } from "react";
+import "./VideoRecommendations.css";
+import DeleteVideoRecommendation from "./DeleteVideoRecommendation";
 
 const VideoList = () => {
 	const [videos, setVideos] = useState([]);
@@ -21,14 +22,21 @@ const VideoList = () => {
 			});
 	}, []);
 
+	const handleDelete = (videoId) => {
+		setVideos(videos.filter((video) => video.id !== videoId));
+	};
+
 	return (
 		<div className="video-list">
 			{videos.map((videoData, i) => (
 				<div className="video" data-testid="video" key={i}>
 					<div>
-						{/* <a>{videoData.title}</a> */}
 						<a href={videoData.src}>{videoData.title}</a>
 					</div>
+					<DeleteVideoRecommendation
+						videoId={videoData.id}
+						onDelete={handleDelete}
+					/>
 				</div>
 			))}
 		</div>

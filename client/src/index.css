@@ -1,8 +1,18 @@
 html,
-body {
-	margin: 0;
-}
-
 h1 {
 	text-align: center;
+	color: #003b7a;
+	font-family: "Roboto", sans-serif;
+	font-weight: 700;
+	font-style: italic;
+}
+
+.app {
+	display: grid;
+	margin: auto;
+	margin-bottom: 7rem;
+}
+
+body {
+	background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
 }

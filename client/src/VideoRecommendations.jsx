@@ -32,18 +32,20 @@ const VideoList = () => {
 	};
 
 	return (
-		<div className="video-list">
-			{videos.map((videoData, i) => (
-				<div className="video" data-testid="video" key={i}>
-					<div>
-						<a href={videoData.src}>{videoData.title}</a>
+		<div className="video-list-container">
+			<div className="video-list">
+				{videos.map((videoData, i) => (
+					<div className="video-item" data-testid="video" key={i}>
+						<div className="video-title">
+							<a href={videoData.src}>{videoData.title}</a>
+						</div>
+						<DeleteVideoRecommendation
+							videoId={videoData.id}
+							onDelete={handleDelete}
+						/>
 					</div>
-					<DeleteVideoRecommendation
-						videoId={videoData.id}
-						onDelete={handleDelete}
-					/>
-				</div>
-			))}
+				))}
+			</div>
 			<NewVideoForm onSubmit={fetchVideos} />
 		</div>
 	);

@@ -23,7 +23,11 @@ const DeleteVideoRecommendation = ({ videoId, onDelete }) => {
 			});
 	};
 
-	return <button onClick={handleDelete}>Remove Video</button>;
+	return (
+		<button className="submit-button" onClick={handleDelete}>
+			Remove Video
+		</button>
+	);
 };
 
 export default DeleteVideoRecommendation;

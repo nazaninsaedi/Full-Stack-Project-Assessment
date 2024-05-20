@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-
 import "./NewVideoForm.css";
+
 const NewVideoForm = () => {
 	const [title, setTitle] = useState("");
 	const [src, setSrc] = useState("");
@@ -26,10 +26,10 @@ const NewVideoForm = () => {
 	};
 
 	return (
-		<div>
-			<h2>Add New Video</h2>
-			<form onSubmit={handleSubmit}>
-				<div>
+		<div className="form-container">
+			<h2 className="form-header">Add New Video</h2>
+			<form className="form-body" onSubmit={handleSubmit}>
+				<div className="input-group">
 					<label htmlFor="title">Video Title: </label>
 					<input
 						type="text"
@@ -39,7 +39,7 @@ const NewVideoForm = () => {
 						required
 					/>
 				</div>
-				<div>
+				<div className="input-group">
 					<label htmlFor="src">Video URL: </label>
 					<input
 						type="url"
@@ -49,7 +49,9 @@ const NewVideoForm = () => {
 						required
 					/>
 				</div>
-				<button type="submit">Submit</button>
+				<button className="submit-button" type="submit">
+					Submit
+				</button>
 			</form>
 		</div>
 	);

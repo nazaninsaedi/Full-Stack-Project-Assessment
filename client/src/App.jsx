@@ -5,8 +5,8 @@ const App = () => {
 	return (
 		<>
 			<h1>Video Recommendations</h1>
-    	<VideoList />
-       <NewVideoForm />
+			<VideoList />
+			<NewVideoForm />
 		</>
 	);
 };

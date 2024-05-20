@@ -3,7 +3,6 @@ import "./VideoRecommendations.css";
 import DeleteVideoRecommendation from "./DeleteVideoRecommendation";
 import NewVideoForm from "./NewVideoForm.jsx";
 
-
 const VideoList = () => {
 	const [videos, setVideos] = useState([]);
 

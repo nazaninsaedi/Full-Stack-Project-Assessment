@@ -16,3 +16,9 @@ h1 {
 body {
 	background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
 }
+
+button:focus,
+input:focus,
+a:focus {
+	background-color: #fdc731;
+}

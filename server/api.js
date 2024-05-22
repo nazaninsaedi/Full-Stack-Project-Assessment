@@ -46,10 +46,6 @@ router.put("/videos/:id/rating", async (req, res) => {
 	const videoId = req.params.id;
 	const { rating } = req.body;
 
-	if (rating < 0 || rating > 5) {
-		return res.status(400).json({ error: "Invalid rating value" });
-	}
-
 	try {
 		const result = await db.query(`SELECT * FROM videos WHERE id=${videoId}`);
 		let video = result.rows[0];

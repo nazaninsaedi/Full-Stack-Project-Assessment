@@ -21,7 +21,7 @@ router.post("/videos", async (req, res) => {
 		return res.status(422).json({ message: "src field is required" });
 	}
 	const result = await db.query(
-		`INSERT INTO videos (title,src) VALUES ('${req.body.title}','${req.body.src}') RETURNING id`
+		`INSERT INTO videos (title,src,rating) VALUES ('${req.body.title}','${req.body.src}', 0) RETURNING id`
 	);
 	const newVideoId = result.rows[0].id;
 	res.status(200).json({ success: true, data: { id: newVideoId } });
@@ -57,7 +57,11 @@ router.put("/videos/:id/rating", async (req, res) => {
 
 		res
 			.status(200)
-			.json({ success: true, message: "Video updated successfully", data:{rating:rating} });
+			.json({
+				success: true,
+				message: "Video updated successfully",
+				data: { rating: rating },
+			});
 	} catch (error) {
 		res.status(500).json({ success: false, error: "Internal server error" });
 	}

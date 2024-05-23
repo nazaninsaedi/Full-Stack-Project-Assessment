@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./VideoRecommendations.css";
 import DeleteVideoRecommendation from "./DeleteVideoRecommendation";
 import NewVideoForm from "./NewVideoForm.jsx";
-
+import RatingDisplay from "./RatingDisplay.jsx";
 const VideoList = () => {
 	const [videos, setVideos] = useState([]);
 
@@ -15,8 +15,7 @@ const VideoList = () => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(JSON.stringify(data));
-				setVideos(data);
+				setVideos(data.sort((a, b) => a.id - b.id));
 			})
 			.catch((error) => {
 				console.error(error);
@@ -31,6 +30,13 @@ const VideoList = () => {
 		setVideos(videos.filter((video) => video.id !== videoId));
 	};
 
+	const handleRatingUpdate = (videoId, rating) => {
+		const updatedVideos = videos.map((video) =>
+			video.id === videoId ? { ...video, rating: rating } : video
+		);
+		setVideos(updatedVideos);
+	};
+
 	return (
 		<div className="video-list-container">
 			<div className="video-list">
@@ -42,6 +48,11 @@ const VideoList = () => {
 						<DeleteVideoRecommendation
 							videoId={videoData.id}
 							onDelete={handleDelete}
+						/>
+						<RatingDisplay
+							videoId={videoData.id}
+							rating={videoData.rating}
+							onUpdate={handleRatingUpdate}
 						/>
 					</div>
 				))}

@@ -57,7 +57,7 @@ router.put("/videos/:id/rating", async (req, res) => {
 
 		res
 			.status(200)
-			.json({ success: true, message: "Video rating successfully" });
+			.json({ success: true, message: "Video updated successfully", data:{rating:rating} });
 	} catch (error) {
 		res.status(500).json({ success: false, error: "Internal server error" });
 	}

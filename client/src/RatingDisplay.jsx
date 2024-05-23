@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-
 const RatingDisplay = ({ videoId, rating, onUpdate }) => {
-	const handleThumbsUp = () => {
+	const handleRating = (updatedRating) => {
 		fetch(`/api/videos/${videoId}/rating`, {
 			method: "PUT",
 			headers: {
@@ -10,7 +8,7 @@ const RatingDisplay = ({ videoId, rating, onUpdate }) => {
 			},
 
 			body: JSON.stringify({
-				rating: rating + 1,
+				rating: updatedRating,
 			}),
 		})
 			.then((response) => {
@@ -31,10 +29,10 @@ const RatingDisplay = ({ videoId, rating, onUpdate }) => {
 		<div>
 			<div>{rating}</div>
 			<div>
-				<button onClick={handleThumbsUp}>
+				<button onClick={() => handleRating(rating + 1)}>
 					Thumbs-up! <i className="fa fa-thumbs-up"></i>
 				</button>
-				<button>
+				<button onClick={() => handleRating(rating - 1)}>
 					Thumbs-down! <i className="fa fa-thumbs-down"></i>
 				</button>
 			</div>

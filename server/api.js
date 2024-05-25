@@ -15,7 +15,7 @@ router.get("/videos", async (_, res) => {
 });
 
 router.post("/videos", async (req, res) => {
-	const { title, src } = req.body;
+	const { title, src, rating } = req.body;
 
 	if (!title) {
 		return res.status(422).json({ message: "Title field is required" });
@@ -26,8 +26,8 @@ router.post("/videos", async (req, res) => {
 
 	try {
 		const result = await db.query(
-			"INSERT INTO videos (title, src) VALUES ($1, $2) RETURNING id",
-			[title, src]
+			"INSERT INTO videos (title, src, rating) VALUES ($1, $2, $3) RETURNING id",
+			[title, src, rating]
 		);
 
 		const newVideoId = result.rows[0].id;

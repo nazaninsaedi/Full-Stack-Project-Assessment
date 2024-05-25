@@ -27,7 +27,7 @@ router.post("/videos", async (req, res) => {
 	try {
 		const result = await db.query(
 			"INSERT INTO videos (title, src, rating) VALUES ($1, $2, $3) RETURNING id",
-			[title, src, rating]
+			[title, src, rating ?? 0]
 		);
 
 		const newVideoId = result.rows[0].id;

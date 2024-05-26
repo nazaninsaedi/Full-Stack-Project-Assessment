@@ -27,7 +27,7 @@ const RatingDisplay = ({ videoId, rating, onUpdate }) => {
 
 	return (
 		<div>
-			<div>{rating}</div>
+			<div>{rating == null ? "Not Rated Yet!" : rating}</div>
 			<div>
 				<button onClick={() => handleRating(rating + 1)}>
 					Thumbs-up! <i className="fa fa-thumbs-up"></i>

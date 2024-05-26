@@ -1,0 +1,44 @@
+:root {
+	--primary-color: #007bff;
+	--container-width: 90%;
+	--gap-size: 20px;
+}
+
+.video-list-container {
+	padding: 20px;
+	margin: 0 auto;
+	width: var(--container-width);
+}
+
+.video-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: var(--gap-size);
+}
+
+.video-item {
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+}
+
+.video-title {
+	font-size: 18px;
+	margin-bottom: 10px;
+	font-family: Arial, sans-serif;
+}
+
+.video-item iframe {
+	width: 100%;
+	height: 200px; /* Adjust height of each video */
+	border: none;
+}
+
+.video-title a {
+	color: var(--primary-color);
+}
+
+.video-title a:hover {
+	text-decoration: underline;
+}

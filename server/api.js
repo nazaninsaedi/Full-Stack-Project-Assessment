@@ -60,4 +60,27 @@ router.delete("/videos/:id", async (req, res) => {
 	}
 });
 
+router.put("/videos/:id/rating", async (req, res) => {
+	const videoId = req.params.id;
+	const { rating } = req.body;
+
+	try {
+		const result = await db.query(`SELECT * FROM videos WHERE id=${videoId}`);
+		let video = result.rows[0];
+		if (!video) {
+			return res.status(404).json({ error: "Video not found" });
+		}
+
+		await db.query(`UPDATE videos SET rating=${rating} WHERE id=${videoId}`);
+
+		res.status(200).json({
+			success: true,
+			message: "Video updated successfully",
+			data: { rating: rating },
+		});
+	} catch (error) {
+		res.status(500).json({ success: false, error: "Internal server error" });
+	}
+});
+
 export default router;

@@ -65,13 +65,18 @@ router.put("/videos/:id/rating", async (req, res) => {
 	const { rating } = req.body;
 
 	try {
-		const result = await db.query("SELECT * FROM videos WHERE id = $1", [videoId]);
+		const result = await db.query("SELECT * FROM videos WHERE id = $1", [
+			videoId,
+		]);
 		let video = result.rows[0];
 		if (!video) {
 			return res.status(404).json({ error: "Video not found" });
 		}
 
-		await db.query("UPDATE videos SET rating=$1 WHERE id = $2", [rating, videoId]);
+		await db.query("UPDATE videos SET rating=$1 WHERE id = $2", [
+			rating,
+			videoId,
+		]);
 
 		res.status(200).json({
 			success: true,
@@ -79,7 +84,9 @@ router.put("/videos/:id/rating", async (req, res) => {
 			data: { rating: rating },
 		});
 	} catch (error) {
-		res.status(500).json({ success: false, error: "Internal server error" });
+		res
+			.status(500)
+			.json({ success: false, error: "Database connection error" });
 	}
 });
 

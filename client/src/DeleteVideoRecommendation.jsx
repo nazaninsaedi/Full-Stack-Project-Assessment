@@ -13,9 +13,6 @@ const DeleteVideoRecommendation = ({ videoId, onDelete }) => {
 				if (!response.ok) {
 					throw new Error("Failed to delete the video");
 				}
-				return response.json();
-			})
-			.then((data) => {
 				onDelete(videoId);
 			})
 			.catch((error) => {

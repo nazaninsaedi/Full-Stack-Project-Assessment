@@ -1,5 +1,6 @@
 import { Router } from "express";
 import db from "./db.js";
+
 const router = Router();
 
 router.get("/videos", async (_, res) => {
@@ -14,31 +15,48 @@ router.get("/videos", async (_, res) => {
 });
 
 router.post("/videos", async (req, res) => {
-	if (!req.body.title) {
+	const { title, src, rating } = req.body;
+
+	if (!title) {
 		return res.status(422).json({ message: "Title field is required" });
 	}
-	if (!req.body.src) {
+	if (!src) {
 		return res.status(422).json({ message: "src field is required" });
 	}
-	const result = await db.query(
-		`INSERT INTO videos (title,src,rating) VALUES ('${req.body.title}','${req.body.src}', 0) RETURNING id`
-	);
-	const newVideoId = result.rows[0].id;
-	res.status(200).json({ success: true, data: { id: newVideoId } });
+
+	try {
+		const result = await db.query(
+			"INSERT INTO videos (title, src, rating) VALUES ($1, $2, $3) RETURNING id",
+			[title, src, rating ?? 0]
+		);
+
+		const newVideoId = result.rows[0].id;
+		res.status(200).json({ success: true, data: { id: newVideoId } });
+	} catch (error) {
+		res
+			.status(500)
+			.json({ success: false, error: "Failed to insert video into database" });
+	}
 });
 
 router.delete("/videos/:id", async (req, res) => {
 	const videoId = req.params.id;
 
 	try {
+		const checkQuery = await db.query("SELECT * FROM videos WHERE id = $1", [
+			videoId,
+		]);
+		if (checkQuery.rows.length === 0) {
+			return res.status(404).json({ message: "Video not found" });
+		}
+
 		await db.query("DELETE FROM videos WHERE id = $1", [videoId]);
-		res
-			.status(200)
-			.json({ success: true, message: "Video deleted successfully" });
+		return res.status(204).end();
 	} catch (error) {
+		console.error(error);
 		res
 			.status(500)
-			.json({ success: false, error: "Failed to delete the video" });
+			.json({ message: "An error occurred while deleting the video" });
 	}
 });
 

@@ -27,7 +27,7 @@ router.post("/videos", async (req, res) => {
 	try {
 		const result = await db.query(
 			"INSERT INTO videos (title, src, rating) VALUES ($1, $2, $3) RETURNING id",
-			[title, src, rating ?? 0]
+			[title, src, rating ?? null]
 		);
 
 		const newVideoId = result.rows[0].id;
@@ -53,7 +53,6 @@ router.delete("/videos/:id", async (req, res) => {
 		await db.query("DELETE FROM videos WHERE id = $1", [videoId]);
 		return res.status(204).end();
 	} catch (error) {
-		console.error(error);
 		res
 			.status(500)
 			.json({ message: "An error occurred while deleting the video" });

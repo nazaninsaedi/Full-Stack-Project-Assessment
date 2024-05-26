@@ -65,13 +65,13 @@ router.put("/videos/:id/rating", async (req, res) => {
 	const { rating } = req.body;
 
 	try {
-		const result = await db.query(`SELECT * FROM videos WHERE id=${videoId}`);
+		const result = await db.query("SELECT * FROM videos WHERE id = $1", [videoId]);
 		let video = result.rows[0];
 		if (!video) {
 			return res.status(404).json({ error: "Video not found" });
 		}
 
-		await db.query(`UPDATE videos SET rating=${rating} WHERE id=${videoId}`);
+		await db.query("UPDATE videos SET rating=$1 WHERE id = $2", [rating, videoId]);
 
 		res.status(200).json({
 			success: true,

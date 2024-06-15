@@ -1,0 +1,36 @@
+name: frontend s3 deployment
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout to main
+        uses: actions/checkout@v2
+
+      - name: seting up node
+        uses: actions/setup-node@v2
+        # with:
+        #   node-version: "20"
+
+      - name: install dependencies
+        run: npm install
+
+      - name: build the static file
+        run: npm run build
+
+      - name: deploy to s3
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY_ID: ${{secrets.AWS_SECRET_ACCESS_KEY_ID}}
+          AWS_REGION: ${{secrets.AWS_REGION}}
+          S3_BUCKET: ${{secrets.S3_BUCKET}}
+
+        run: aws s3 sync server/static/* s3://${S3_BUCKET}/ --acl public-read
+        
+
+      
